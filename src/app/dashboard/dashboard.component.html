@@ -1,0 +1,89 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div class="row">
+              <div class="col-md-6">
+                <h4 class="card-title ">All Users</h4>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="userFilter.fullName"
+                    placeholder="Search by Name..." style="color: white">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th style="display: none;">
+                    Id
+                  </th>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Phone Number
+                  </th>
+                  <!-- <th>
+                    Status
+                  </th> -->
+                  <th>
+                    Actions
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of allUsers | filterBy: userFilter | paginate: {itemsPerPage:20, currentPage:p}">
+                    <td style="display: none;">
+                      {{user.id}}
+                    </td>
+                    <td>
+                      {{user.fullName}}
+                    </td>
+                    <td>
+                      {{user.phoneNumber}}
+                    </td>
+                    <!-- <td>
+                      <div class="material-switch" *ngIf="!user.isVerified">
+                        <input id="{{user.id}}" name="someSwitchOption001" type="checkbox"
+                          (change)="status(user.id, !user.isVerified)" />
+                        <label for="{{user.id}}" class="label-primary"></label>
+                      </div>
+
+                      <div class="material-switch" *ngIf="user.isVerified">
+                        <input id="{{user.id}}" name="someSwitchOption001" type="checkbox"
+                          (change)="status(user.id, !user.isVerified)" checked="checked" />
+                        <label for="{{user.id}}" class="label-primary"></label>
+                      </div>
+                    </td> -->
+                    <td class="text-primary">
+                      <!-- <a routerLink="/showDetailPrice/{{user._id}}" title="View Details"><i class="fas fa-eye"
+                          style="color: green; margin-right: 10px"></i></a> -->
+                      <a href="javascript:void(0)" *ngIf="!user.isDelete" (click)="deleteUser(user.id)" title="Delete User"><i
+                          class="fas fa-trash" style="color: red"></i></a>
+                      <a href="javascript:void(0)" *ngIf="user.isDelete" (click)="restoreUser(user.id)"
+                        title="Restore User"><i class="fas fa-trash-restore" style="color: blue"></i></a>
+                    </td>
+
+                  </tr>
+                  <tr *ngIf="(allUsers | filterBy: userFilter).length == 0">
+                    <td align="Center">
+                      No matching elements
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div align="Center">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
